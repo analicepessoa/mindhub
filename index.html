@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MindHub - Nuvem Avançada</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Script Oficial do Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         #mindmap-canvas {
@@ -24,11 +22,10 @@
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen">
 
-    <!-- Navbar -->
     <nav class="bg-indigo-600 text-white shadow-md p-4 sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
-            <h1 onclick="goHome()" class="text-xl font-bold tracking-wide cursor-pointer flex items-center gap-2">
-                <i class="fa-solid fa-brain"></i> MindHub <span class="text-xs bg-indigo-500 px-2 py-0.5 rounded-sm font-normal text-indigo-100">Nuvem</span>
+            <h1 onclick="goHome()" class="text-xl font-bold tracking-wide cursor-pointer flex items-center gap-2 select-none hover:opacity-90 transition">
+                <i class="fa-solid fa-brain"></i> MindHub <i class="fa-solid fa-cloud-gear text-indigo-200 text-sm"></i> <span class="text-xs bg-indigo-500 px-2 py-0.5 rounded-sm font-normal text-indigo-100">Nuvem</span>
             </h1>
             <div class="flex items-center gap-3">
                 <span id="sync-status" class="text-xs text-indigo-200"><i class="fa-solid fa-cloud-arrow-up"></i> Conectando...</span>
@@ -41,11 +38,9 @@
 
     <div class="container mx-auto p-4 md:p-6 max-w-6xl">
         
-        <!-- SEÇÃO: ADMINISTRAÇÃO GERAL -->
         <section id="admin-section" class="hidden bg-white p-6 rounded-xl shadow-sm mb-6 border border-gray-200">
             <h2 class="text-lg font-bold mb-4 text-indigo-900"><i class="fa-solid fa-sliders mr-2"></i>Painel de Controle Estrutural</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Temas Principais -->
                 <div class="border-r pr-0 md:pr-4 border-gray-100">
                     <h3 class="text-xs font-bold text-gray-600 uppercase mb-3">1. Grandes Temas</h3>
                     <div class="flex gap-2 mb-4">
@@ -54,7 +49,6 @@
                     </div>
                     <ul id="theme-list-admin" class="divide-y divide-gray-100 max-h-40 overflow-y-auto space-y-1"></ul>
                 </div>
-                <!-- Semestres -->
                 <div class="border-r pr-0 md:pr-4 border-gray-100">
                     <h3 class="text-xs font-bold text-gray-600 uppercase mb-3">2. Semestres</h3>
                     <div class="flex gap-2 mb-4">
@@ -63,7 +57,6 @@
                     </div>
                     <ul id="semester-list-admin" class="divide-y divide-gray-100 max-h-40 overflow-y-auto space-y-1"></ul>
                 </div>
-                <!-- Matérias -->
                 <div>
                     <h3 class="text-xs font-bold text-gray-600 uppercase mb-3">3. Matérias</h3>
                     <div class="space-y-3 mb-4">
@@ -78,13 +71,11 @@
             </div>
         </section>
 
-        <!-- TELA 1: DASHBOARD DE TEMAS -->
         <section id="view-dashboard">
             <h2 class="text-2xl font-black text-gray-900 mb-6">Seus Espaços de Conhecimento</h2>
             <div id="themes-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
         </section>
 
-        <!-- TELA 2: GRADE ACADÊMICA -->
         <section id="view-faculty" class="hidden">
             <button onclick="goHome()" class="text-indigo-600 hover:text-indigo-800 font-medium mb-6 inline-flex items-center gap-2 text-sm">
                 <i class="fa-solid fa-arrow-left"></i> Voltar ao Dashboard
@@ -98,7 +89,6 @@
             <div id="semester-cards-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
         </section>
 
-        <!-- TELA 3: O PORTAL INTERNO DA MATÉRIA -->
         <section id="view-portal" class="hidden">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                 <button id="btn-back-portal" onclick="" class="text-indigo-600 hover:text-indigo-800 font-medium inline-flex items-center gap-2 text-sm">
@@ -111,14 +101,12 @@
             
             <h2 id="portal-title" class="text-3xl font-black text-gray-900 mb-6">Nome do Portal</h2>
 
-            <!-- Sistema de Abas -->
             <div class="flex border-b border-gray-200 mb-6 overflow-x-auto gap-2">
                 <button onclick="switchTab('notes')" id="tab-btn-notes" class="py-2 px-4 font-bold text-sm border-b-2 border-indigo-600 text-indigo-600 whitespace-nowrap"><i class="fa-solid fa-book-open mr-2"></i>Anotações & Posts</button>
                 <button onclick="switchTab('mindmap')" id="tab-btn-mindmap" class="py-2 px-4 font-bold text-sm border-b-2 border-transparent text-gray-500 hover:text-indigo-600 whitespace-nowrap"><i class="fa-solid fa-diagram-project mr-2"></i>Mapa Mental Dinâmico</button>
                 <button onclick="switchTab('reviews')" id="tab-btn-reviews" class="py-2 px-4 font-bold text-sm border-b-2 border-transparent text-gray-500 hover:text-indigo-600 whitespace-nowrap"><i class="fa-solid fa-arrows-rotate mr-2"></i>Conteúdos & Revisão Ativa</button>
             </div>
 
-            <!-- CONTEÚDO DA ABA 1: ANOTAÇÕES E ROADMAP -->
             <div id="tab-content-notes" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2 space-y-6">
                     <div class="bg-white p-5 rounded-xl shadow-xs border border-gray-100">
@@ -139,7 +127,6 @@
                 </div>
             </div>
 
-            <!-- CONTEÚDO DA ABA 2: MAPA MENTAL -->
             <div id="tab-content-mindmap" class="hidden space-y-4">
                 <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-xs flex flex-wrap items-center justify-between gap-4">
                     <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
@@ -155,7 +142,6 @@
                 <div id="mindmap-canvas" class="w-full h-[550px] bg-white border border-gray-200 rounded-2xl relative overflow-hidden shadow-inner"></div>
             </div>
 
-            <!-- CONTEÚDO DA ABA 3: REVISÃO ATIVA -->
             <div id="tab-content-reviews" class="hidden bg-white p-6 rounded-2xl border border-gray-200 shadow-xs space-y-6">
                 <div>
                     <h3 class="text-lg font-bold text-gray-900 mb-1">Mapeamento de Conteúdo Técnico</h3>
@@ -179,16 +165,14 @@
         </section>
     </div>
 
-    <!-- LOGIC SCRIPT -->
     <script>
         // Chaves injetadas e prontas do Supabase
         const SUPABASE_URL = "https://ioosqezhiuvmqxpuhncx.supabase.co"; 
         const SUPABASE_ANON_KEY = "sb_publishable_80T1oUALjj3KHw3Xgir8Xg_DNMHlJJj";
         
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        const USUARIO_ID = "meu_cerebro_digital"; // Identificador exclusivo dos seus dados na nuvem
+        const USUARIO_ID = "meu_cerebro_digital"; 
 
-        // Estrutura base de inicialização
         let data = {
             temas: [
                 { id: 1, nome: "🎓 Faculdade de Letras / TI", eAcademico: true },
@@ -202,7 +186,6 @@
         let currentThemeId = null, currentSemesterId = null, currentMateriaId = null;
         let activeTab = 'notes';
 
-        // Carrega dados da Nuvem
         async function loadDataFromCloud() {
             setStatus("Iniciando conexão...", "amber");
             try {
@@ -230,7 +213,6 @@
             renderAdminLists();
         }
 
-        // Faz o upload das alterações
         async function pushDataToCloud() {
             setStatus("Salvando na Nuvem...", "amber");
             try {
@@ -261,7 +243,6 @@
             if (currentThemeId && currentSemesterId === null) renderFacultyView();
         }
 
-        // --- SISTEMA DE FLUXO DE TELAS ---
         function toggleAdminView() { document.getElementById('admin-section').classList.toggle('hidden'); }
 
         function goHome() {
@@ -319,7 +300,6 @@
             if(tab === 'reviews') renderReviews();
         }
 
-        // --- MANIPULAÇÃO DE DADOS INTERNOS ---
         function addNote() {
             const txt = document.getElementById('note-content').value.trim();
             if (!txt) return;
@@ -328,6 +308,7 @@
         }
         function deleteNote(id) { data.notes = data.notes.filter(n => n.id !== id); saveData(); }
 
+        // Atalho Ctrl + Enter para salvar notas de forma rápida
         document.addEventListener('keydown', (e) => {
             if(e.key === 'Enter' && e.ctrlKey && document.activeElement.id === 'note-content') {
                 addNote();
@@ -427,7 +408,7 @@
             });
         }
 
-        // --- SISTEMAS ADMINISTRATIVOS E RENDERS DE SUPORTE ---
+        // --- SISTEMAS ADMINISTRATIVOS ---
         function createTheme() { const input = document.getElementById('new-theme-name'); if (!input.value.trim()) return; data.temas.push({ id: Date.now(), nome: input.value.trim(), eAcademico: false }); input.value = ''; saveData(); }
         function editTheme(id) { const t = data.temas.find(x => x.id === id); const n = prompt("Editar Tema:", t.nome); if (n?.trim()) { t.nome = n.trim(); saveData(); } }
         function deleteTheme(id) { if(confirm("Deletar tema?")) { data.temas = data.temas.filter(x => x.id !== id); if(currentThemeId === id) goHome(); saveData(); } }
@@ -497,7 +478,6 @@
             mList.innerHTML = data.materias.map(m => `<li class="flex justify-between items-center py-1 bg-gray-50 px-2 rounded text-xs mb-1"><span class="truncate max-w-[120px]">${m.nome}</span><div class="flex gap-2"><button onclick="editSubject(${m.id})" class="text-blue-500"><i class="fa-solid fa-pen"></i></button><button onclick="deleteSubject(${m.id})" class="text-red-500"><i class="fa-solid fa-trash"></i></button></div></li>`).join('');
         }
 
-        // Inicialização
         loadDataFromCloud();
     </script>
 </body>
